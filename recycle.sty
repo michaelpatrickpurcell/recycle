@@ -1,12 +1,20 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage{tikz}
+\usetikzlibrary{shadings}
 \usetikzlibrary{math}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.shapes}
+\usetikzlibrary{patterns}
 
 \usepackage{calc}
 \usepackage{fontspec}
 \usepackage{ifthen}
 \usepackage{contour}
 \contournumber{1024}
+
+\usepackage{booktabs}
 
 \newlength{\cardwidth}
 \newlength{\cardheight}
@@ -46,25 +54,33 @@
 			\draw[very thick, #1] (\i,\j) circle (0.105);
 }}
 
-\tikzset{pics/cardfrontpattern/.style 2 args={
+\tikzset{pics/cardfrontpattern0/.style n args={3}{
 	code={
 		\setmainfont[Scale=6.0]{Roboto Slab}
 		\node (c) at (0, 0) {{\contour{black}{\textcolor{#2}{\Large #1}}}};
-		\node (ul) at (-0.9, 1.4) {{{\tiny\contour{black}{\textcolor{#2}{#1}}}}};
-		\node[transform shape, rotate=180] (lr) at (0.9, -1.4) {{{\tiny\contour{black}{\textcolor{#2}{#1}}}}};
-		
-		\draw[line width=0.35ex, rounded corners=3mm, black] (ul) --++ (1.8, 0) -- (lr);
-		\draw[line width=0.25ex, rounded corners=3mm, #2, shorten >=0.05ex, shorten <=0.05ex] (ul) --++ (1.8, 0) -- (lr);
+		\node[inner sep=0.25ex] (ul) at (-0.9, 1.4) {{{\tiny\contour{black}{\textcolor{#2}{#1}}}}};
+		\node[transform shape, rotate=180, inner sep=0.25ex] (lr) at (0.9, -1.4) {{{\tiny\contour{black}{\textcolor{#2}{#1}}}}};
+		\node[inner sep=0pt] (ur) at (0.9, 1.4) {};
+		\node[inner sep=0pt] (ll) at (-0.9, -1.4) {};
 
-		\draw[line width=0.35ex, rounded corners=3mm, black] (lr) --++ (-1.8, 0) -- (ul);
-		\draw[line width=0.25ex, rounded corners=3mm, #2, shorten >=0.05ex, shorten <=0.05ex] (lr) --++ (-1.8, 0) -- (ul);
+		\node[inner sep=0pt] at (0,1.4) (u) {};
+				
+		\draw[line width=0.35ex, rounded corners=3mm, black] (ul) -- (0.9,1.4) -- (lr);
+		\draw[line width=0.25ex, rounded corners=3mm, #2, shorten >=0.05ex, shorten <=0.05ex] (ul) -- (0.9,1.4) -- (lr);
+
+		\draw[line width=0.35ex, rounded corners=3mm, black] (lr) -- (-0.9,-1.4) -- (ul);
+		\draw[line width=0.25ex, rounded corners=3mm, #2, shorten >=0.05ex, shorten <=0.05ex] (lr) -- (-0.9,-1.4) -- (ul);
+
 	}
 }}
+
 
 \tikzset{pics/cardfrontpattern2/.style n args={3}{
 	code={
 		\setmainfont[Scale=6.0]{Roboto Slab}
 		\node (c) at (0, 0) {{\contour{black}{\textcolor{#2}{\Large #1}}}};
+%		\node[inner sep=0pt,minimum height=0.75in, minimum width=0.75in] (ul) at (-0.4, 0.9) {\includegraphics[height=0.5in]{wax_seal.png}};
+%		\node[draw, very thick, star, star points=5, star point ratio=2.25, fill=lightgray, inner sep=0.0825in]  at (-0.4,0.9) {};
 		\node[inner sep=0pt,minimum height=0.75in, minimum width=0.75in] (ul) at (-0.9, 1.4) {{{\tiny\contour{black}{\textcolor{#2}{#1}}}}};
 		\node[transform shape, rotate=180, inner sep=0pt,minimum height=0.75in, minimum width=0.75in] (lr) at (0.9, -1.4) {{{\tiny\contour{black}{\textcolor{#2}{#1}}}}};
 		\node[inner sep=0pt,minimum height=0.75in, minimum width=0.75in] (ur) at (0.9, 1.4) {{{{\setmainfont[Scale=7.0]{KalocsaiFlowers} \tiny\contour{black}{\textcolor{#2}{#3}}}}}};
@@ -85,22 +101,64 @@
 	}
 }}
 
-%\tikzset{cardfrontpatternunderline/.pic={
-\tikzset{pics/cardfrontpatternunderline/.style 2 args={
+\tikzset{stripeblack/.pic={
+		\draw[line width=0.08333ex, rounded corners=3mm, black, shorten >=0.05ex, shorten <=0.05ex] (ul) -- (0.9,1.4) -- (llr);
+		\draw[line width=0.08333ex, rounded corners=3mm, black, shorten >=0.05ex, shorten <=0.05ex] (lr) -- (-0.9,-1.4) -- (uul);
+}}
+
+\tikzset{stripewhite/.pic={
+		\draw[line width=0.08333ex, rounded corners=3mm, white, shorten >=0.05ex, shorten <=0.05ex] (ul) -- (0.9,1.4) -- (llr);
+		\draw[line width=0.08333ex, rounded corners=3mm, white, shorten >=0.05ex, shorten <=0.05ex] (lr) -- (-0.9,-1.4) -- (uul);
+}}
+
+\tikzset{doublestripeblack/.pic={
+		\draw[line width=0.15ex, rounded corners=3mm, black, shorten >=0.05ex, shorten <=0.05ex] (ul) -- (0.9,1.4) -- (llr);
+		\draw[line width=0.05ex, rounded corners=3mm, #1, shorten >=0.05ex, shorten <=0.05ex] (ul) -- (0.9,1.4) -- (llr);
+		
+		\draw[line width=0.15ex, rounded corners=3mm, black, shorten >=0.05ex, shorten <=0.05ex] (lr) -- (-0.9, -1.4) -- (uul);
+		\draw[line width=0.05ex, rounded corners=3mm, #1, shorten >=0.05ex, shorten <=0.05ex] (lr) -- (-0.9,-1.4) -- (uul);
+}}
+
+\tikzset{doublestripewhite/.pic={
+		\draw[line width=0.15ex, rounded corners=3mm, white, shorten >=0.05ex, shorten <=0.05ex] (ul) -- (0.9,1.4) -- (llr);
+		\draw[line width=0.05ex, rounded corners=3mm, #1, shorten >=0.05ex, shorten <=0.05ex] (ul) -- (0.9,1.4) -- (llr);
+		
+		\draw[line width=0.15ex, rounded corners=3mm, white, shorten >=0.05ex, shorten <=0.05ex] (lr) -- (-0.9, -1.4) -- (uul);
+		\draw[line width=0.05ex, rounded corners=3mm, #1, shorten >=0.05ex, shorten <=0.05ex] (lr) -- (-0.9,-1.4) -- (uul);
+}}
+
+
+
+\tikzset{pics/cardfrontpattern3/.style n args={5}{
 	code={
 		\setmainfont[Scale=6.0]{Roboto Slab}
-		\pic () at (0,0) {cardfrontpattern={#1}{#2}};	
-		\Large
-		\node[fill=black, inner sep = 0pt, minimum width = 0.875ex, minimum height = 0.225ex] () at (0, -0.66) {};
-		\node[fill=#2, inner sep = 0pt, minimum width = 0.8ex, minimum height = 0.15ex] () at (0, -0.66) {};
+		\node (c) at (0, 0) {{\contour{black}{\textcolor{#4}{\Large #1}}}};
+%		\node[text width=1.25in, align=center, inner sep=0pt] (c) at (0.05, 0) {\setmainfont[Scale=7.0]{KalocsaiFlowers}\Large\contour{black}{\textcolor{#3}{#4}}};
 
-		\tiny
-		\node[fill=black, inner sep = 0pt, minimum width = 0.9ex, minimum height = 0.25ex] () at (-0.90, 1.4in-1ex) {};
-		\node[fill=#2, inner sep = 0pt, minimum width = 0.8ex, minimum height = 0.15ex] () at (-0.90, 1.4in-1ex) {};
+		\node[inner sep=0.25ex] (ul) at (-0.9, 1.4) {{{\tiny\contour{black}{\textcolor{#4}{#2}}}}};
+		\node[inner sep=0pt,minimum height=0.5in, minimum width=0.5in] (uul) at (-0.9, 0.975) {};
+		\pic at (-0.9, 0.975) {#3}; 
 		
-		\node[fill=black, inner sep = 0pt, minimum width = 0.9ex, minimum height = 0.25ex, rotate=180] () at (0.90, -1.4in+1ex) {};
-		\node[fill=#2, inner sep = 0pt, minimum width = 0.8ex, minimum height = 0.15ex, rotate=180] () at (0.90, -1.4in+1ex) {};
+		\node[transform shape, rotate=180, inner sep=0.25ex] (lr) at (0.9, -1.4) {{{\tiny\contour{black}{\textcolor{#4}{#2}}}}};
+		\node[transform shape, rotate=180, inner sep=0pt,minimum height=0.5in, minimum width=0.5in] (llr) at (0.9, -0.975) {};
+		\pic[rotate=180, transform shape] at (0.9, -0.975) {#3}; 
+		
+%				\node[inner sep=0.25ex] (ur) at (0.9, 1.4) {{{{\setmainfont[Scale=7.0]{KalocsaiFlowers} \tiny\contour{black}{\textcolor{#4}{#5}}}}}};
+%		\node[transform shape, rotate=180, inner sep=0.25ex] (ll) at (-0.9, -1.4) {{{{\setmainfont[Scale=7.0]{KalocsaiFlowers} \tiny\contour{black}{\textcolor{#4}{#5}}}}}};
+				\node[inner sep=0.25ex] (ur) at (0.9, 1.4) {};%{{{{\tiny\contour{black}{\textcolor{#4}{#5}}}}}};
+		\node[transform shape, rotate=180, inner sep=0.25ex] (ll) at (-0.9, -1.4) {};%{{{{\tiny\contour{black}{\textcolor{#4}{#5}}}}}};
+
+
+		\draw[line width=0.35ex, rounded corners=3mm, black] (ul) -- (0.9,1.4) -- (llr);
+		\draw[line width=0.25ex, rounded corners=3mm, #4, shorten >=0.05ex, shorten <=0.05ex] (ul) -- (0.9,1.4) -- (llr);
+
+		\draw[line width=0.35ex, rounded corners=3mm, black] (lr) -- (-0.9, -1.4) -- (uul);
+		\draw[line width=0.25ex, rounded corners=3mm, #4, shorten >=0.05ex, shorten <=0.05ex] (lr) -- (-0.9,-1.4) -- (uul);
+
+		\pic at (0,0) {#5={#4}};
+
 	}
+	
 }}
 
 \tikzset{pics/cardfrontpatternunderline2/.style n args={3}{
@@ -120,6 +178,78 @@
 	}
 }}
 
+
+\tikzset{pics/cardfrontpattern4/.style n args={3}{
+	code={
+		\setmainfont[Scale=6.0]{Roboto Slab}
+%		\node[inner sep=0pt,minimum height=0.75in, minimum width=0.75in] (ul) at (-0.9, 1.4) {{{{\setmainfont[Scale=7.0]{KalocsaiFlowers} \tiny\contour{black}{\textcolor{Red}{j}}}}}};
+%		\node[transform shape, rotate=180, inner sep=0pt,minimum height=0.75in, minimum width=0.75in] (lr) at (0.9, -1.4) {{{{\setmainfont[Scale=7.0]{KalocsaiFlowers} \tiny\contour{black}{\textcolor{ForestGreen}{l}}}}}};
+%		\node[inner sep=0pt,minimum height=0.75in, minimum width=0.75in] (ur) at (0.9, 1.4) {{{{\setmainfont[Scale=7.0]{KalocsaiFlowers} \tiny\contour{black}{\textcolor{Goldenrod}{c}}}}}};
+%		\node[transform shape, rotate=180, inner sep=0pt, minimum height=0.75in, minimum width=0.75in] (ll) at (-0.9, -1.4) {{{{\setmainfont[Scale=7.0]{KalocsaiFlowers} \tiny\contour{black}{\textcolor{RoyalBlue}{r}}}}}};
+		
+		\node[inner sep=0pt, minimum width=0.25in, minimum height=0.25in] at (0,1.4) (u) {};
+		\node[inner sep=0pt, minimum width=0.25in, minimum height=0.25in] at (0.9,1.4) (ur) {};
+		\node[inner sep=0pt, minimum width=0.25in, minimum height=0.25in] at (0.9,0) (r) {};
+		\node[inner sep=0pt, minimum width=0.25in, minimum height=0.25in] at (0.9,-1.4) (lr) {};
+		\node[inner sep=0pt, minimum width=0.25in, minimum height=0.25in] at (0,-1.4) (b) {};
+		\node[inner sep=0pt, minimum width=0.25in, minimum height=0.25in] at (-0.9,-1.4) (ll) {};
+		\node[inner sep=0pt, minimum width=0.25in, minimum height=0.25in] at (-0.9,0) (l) {};
+		\node[inner sep=0pt, minimum width=0.25in, minimum height=0.25in] at (-0.9,1.4) (ul) {};
+
+				
+		\draw[line width=0.35ex, rounded corners=3mm, black] (ul) -- (0.9,1.4) -- (lr);
+		\draw[line width=0.35ex, rounded corners=3mm, black] (ur) -- (0.9,-1.4) -- (ll);
+		\draw[line width=0.35ex, rounded corners=3mm, black] (lr) -- (-0.9, -1.4) -- (ul);
+		\draw[line width=0.35ex, rounded corners=3mm, black] (ll) -- (-0.9,1.4) -- (ur);
+		
+		\node (c) at (0, 0) {{\contour{black}{\textcolor{#2}{\Large #1}}}};
+		\begin{scope}
+			\clip (0,0) rectangle (1.25,1.75);
+			\node at (0, 0) {{\contour{black}{\textcolor{Goldenrod}{\Large #1}}}};
+			\draw[line width=0.25ex, rounded corners=3mm, Red, shorten >=0.05ex, shorten <=0.05ex] (ul) -- (0.9,1.4) -- (lr);
+			\draw[line width=0.1875ex, rounded corners=3mm, Goldenrod, shorten >=0.05ex, shorten <=0.05ex] (ul) -- (0.9,1.4) -- (lr);
+			\draw[line width=0.138889ex, rounded corners=3mm, LimeGreen, shorten >=0.05ex, shorten <=0.05ex] (ul) -- (0.9,1.4) -- (lr);
+			\draw[line width=0.083334ex, rounded corners=3mm, RoyalBlue, shorten >=0.05ex, shorten <=0.05ex] (ul) -- (0.9,1.4) -- (lr);
+			\draw[line width=0.027778ex, rounded corners=3mm, black, shorten >=0.05ex, shorten <=0.05ex] (ul) -- (0.9,1.4) -- (lr);
+
+
+		\end{scope}
+
+		\begin{scope}
+			\clip (0,0) rectangle (-1.25,1.75);
+			\node at (0, 0) {{\contour{black}{\textcolor{Red}{\Large #1}}}};
+			\draw[line width=0.25ex, rounded corners=3mm, Red, shorten >=0.05ex, shorten <=0.05ex] (ll) -- (-0.9,1.4) -- (ur);
+			\draw[line width=0.1875ex, rounded corners=3mm, Goldenrod, shorten >=0.05ex, shorten <=0.05ex] (ll) -- (-0.9,1.4) -- (ur);
+			\draw[line width=0.138889ex, rounded corners=3mm, LimeGreen, shorten >=0.05ex, shorten <=0.05ex] (ll) -- (-0.9,1.4) -- (ur);
+			\draw[line width=0.083334ex, rounded corners=3mm, RoyalBlue, shorten >=0.05ex, shorten <=0.05ex] (ll) -- (-0.9,1.4) -- (ur);
+			\draw[line width=0.027778ex, rounded corners=3mm, black, shorten >=0.05ex, shorten <=0.05ex] (ll) -- (-0.9,1.4) -- (ur);
+
+		\end{scope}
+
+		\begin{scope}
+			\clip (0,0) rectangle (-1.25,-1.75);
+			\node at (0, 0) {{\contour{black}{\textcolor{RoyalBlue}{\Large #1}}}};
+			\draw[line width=0.25ex, rounded corners=3mm, Red, shorten >=0.05ex, shorten <=0.05ex] (lr) -- (-0.9,-1.4) -- (ul);
+			\draw[line width=0.1875ex, rounded corners=3mm, Goldenrod, shorten >=0.05ex, shorten <=0.05ex] (lr) -- (-0.9,-1.4) -- (ul);
+			\draw[line width=0.138889ex, rounded corners=3mm, LimeGreen, shorten >=0.05ex, shorten <=0.05ex] (lr) -- (-0.9,-1.4) -- (ul);
+			\draw[line width=0.083334ex, rounded corners=3mm, RoyalBlue, shorten >=0.05ex, shorten <=0.05ex] (lr) -- (-0.9,-1.4) -- (ul);
+			\draw[line width=0.027778ex, rounded corners=3mm, black, shorten >=0.05ex, shorten <=0.05ex] (lr) -- (-0.9,-1.4) -- (ul);
+		\end{scope}
+
+		\begin{scope}
+			\clip (0,0) rectangle (1.25,-1.75);
+			\node at (0, 0) {{\contour{black}{\textcolor{LimeGreen}{\Large #1}}}};
+			\draw[line width=0.25ex, rounded corners=3mm, Red, shorten >=0.05ex, shorten <=0.05ex] (ur) -- (0.9,-1.4) -- (ll);
+			\draw[line width=0.1875ex, rounded corners=3mm, Goldenrod, shorten >=0.05ex, shorten <=0.05ex] (ur) -- (0.9,-1.4) -- (ll);
+			\draw[line width=0.138889ex, rounded corners=3mm, LimeGreen, shorten >=0.05ex, shorten <=0.05ex] (ur) -- (0.9,-1.4) -- (ll);
+			\draw[line width=0.083334ex, rounded corners=3mm, RoyalBlue, shorten >=0.05ex, shorten <=0.05ex] (ur) -- (0.9,-1.4) -- (ll);
+			\draw[line width=0.027778ex, rounded corners=3mm, black, shorten >=0.05ex, shorten <=0.05ex] (ur) -- (0.9,-1.4) -- (ll);
+		\end{scope}
+
+	}
+}}
+
+
 \tikzset{cardbackprintable/.pic={
 	\begin{scope}
 	\clip (-\cardwidth/2 - \bleed, 0in) --%
@@ -137,13 +267,10 @@
 	      cycle;
 	\pic () at (0,0) {cardbackpattern={black}};
 	% Cutting guides for corners of the cards	
-%	\pic () at (0,0) {cutguide={black}};
 \end{scope}
 }}
 
-
-%\tikzset{cardfrontprintable/.pic={
-\tikzset{pics/cardfrontprintable/.style 2 args={
+\tikzset{pics/cardfrontprintable0/.style n args={3}{
 	code={
 		\begin{scope}
 		\clip (-\cardwidth/2 - \bleed, 0in) --%
@@ -153,9 +280,11 @@
 		      (-\cardwidth/2 - \bleed, -\cardheight/2 - \bleed) --%
 		      cycle;
 		% Pattern for card front
-		\pic () at (0,0) {cardfrontpattern={#1}{#2}};
+		\pic () at (0,0) {cardfrontpattern0={#1}{#2}{#3}};
+		
+
 		% Cutting guides for corners of the cards	
-		\pic () at (0,0) {cutguide={white}};
+		\pic () at (0,0) {cutguide={black}};
 		\end{scope}
 	}
 }}
@@ -172,13 +301,12 @@
 		% Pattern for card front
 		\pic () at (0,0) {cardfrontpattern2={#1}{#2}{#3}};
 		% Cutting guides for corners of the cards	
-		\pic () at (0,0) {cutguide={white}};
+		\pic () at (0,0) {cutguide={black}};
 		\end{scope}
 	}
 }}
 
-%\tikzset{cardfrontunderlineprintable/.pic={
-\tikzset{pics/cardfrontunderlineprintable/.style 2 args={
+\tikzset{pics/cardfrontprintable3/.style n args={5}{
 	code={
 		\begin{scope}
 		\clip (-\cardwidth/2 - \bleed, 0in) --%
@@ -188,12 +316,118 @@
 		      (-\cardwidth/2 - \bleed, -\cardheight/2 - \bleed) --%
 		      cycle;
 		% Pattern for card front
-		\pic () at (0,0) {cardfrontpatternunderline={#1}{#2}};
+		\pic () at (0,0) {cardfrontpattern3={#1}{#2}{#3}{#4}{#5}};
 		% Cutting guides for corners of the cards	
 		\pic () at (0,0) {cutguide={black}};
 		\end{scope}
 	}
 }}
+
+\tikzset{star/.pic={
+	\node[draw, very thick, star, star points=5, star point ratio=2.25, fill=lightgray, inner sep=0.0625in]  at (0,-0.01in) {};
+}}
+
+\tikzset{sun/.pic={
+	\node[draw, very thick, star, star points=18, star point ratio=1.25, fill=lightgray, inner sep=0.105in]  at (0,0) {};
+}}
+
+\tikzset{moon/.pic={
+%	\path (0,0) (-0.625in,0);
+	\begin{scope}
+	\clip (-0.19in,-0.19in) rectangle (0.19in, 0.19in);
+	\begin{scope}
+	\clip[draw] (0.04,0) circle (0.18in);
+	\node[draw, very thick, circle, fill=lightgray, inner sep=0.125in]  at (0.04,0) {};
+	\node[draw, very thick, circle, fill=white, inner sep=0.125in] at (0.215in, 0) {};
+	\end{scope}
+	\node[circle, fill=white, inner sep=0.12in] at (0.215in, 0) {};
+	\end{scope}
+}}
+
+
+\tikzset{pics/cardfrontprintable2star1/.style n args={3}{
+	code={
+		\begin{scope}
+		\clip (-\cardwidth/2 - \bleed, 0in) --%
+		      (-\cardwidth/2 - \bleed, \cardheight/2 + \bleed) --%
+		      (\cardwidth/2 + \bleed, \cardheight/2 + \bleed) --%
+		      (\cardwidth/2 + \bleed, -\cardheight/2 - \bleed) --%
+		      (-\cardwidth/2 - \bleed, -\cardheight/2 - \bleed) --%
+		      cycle;
+		% Pattern for card front
+		\pic () at (0,0) {cardfrontpattern2={#1}{#2}{#3}};
+%		\node[draw, very thick, star, star points=5, star point ratio=2.25, fill=lightgray, inner sep=0.0825in]  at (-0.4,0.9) {};
+				
+		\pic at (-0.9,0.75) {star};		
+		\pic at (-0.9,0.25) {star};		
+		\pic at (-0.9,-0.25) {star};		
+		\pic at (-0.9,-0.75) {star};		
+
+		\pic[rotate=180, transform shape] at (0.9,0.75) {star};		
+		\pic[rotate=180, transform shape] at (0.9,0.25) {star};		
+		\pic[rotate=180, transform shape] at (0.9,-0.25) {star};		
+		\pic[rotate=180, transform shape] at (0.9,-0.75) {star};		
+
+		\pic[rotate=-90, transform shape] at (-0.25, 1.4) {star};		
+		\pic[rotate=-90, transform shape] at (0.25, 1.4) {star};		
+
+		\pic[rotate=90, transform shape] at (-0.25, -1.4) {star};		
+		\pic[rotate=90, transform shape] at (0.25, -1.4) {star};		
+
+		% Cutting guides for corners of the cards	
+		\pic () at (0,0) {cutguide={black}};
+		\end{scope}
+	}
+}}
+
+
+\tikzset{pics/cardfrontprintable2star2/.style n args={3}{
+	code={
+		\begin{scope}
+		\clip (-\cardwidth/2 - \bleed, 0in) --%
+		      (-\cardwidth/2 - \bleed, \cardheight/2 + \bleed) --%
+		      (\cardwidth/2 + \bleed, \cardheight/2 + \bleed) --%
+		      (\cardwidth/2 + \bleed, -\cardheight/2 - \bleed) --%
+		      (-\cardwidth/2 - \bleed, -\cardheight/2 - \bleed) --%
+		      cycle;
+		% Pattern for card front
+		\pic () at (0,0) {cardfrontpattern2={#1}{#2}{#3}};
+%		\node[draw, very thick, star, star points=5, star point ratio=2.25, fill=lightgray, inner sep=0.0825in]  at (-0.4,0.9) {};
+				
+		\pic at (-0.9,0.625) {star};		
+		\pic at (-0.9,0) {star};		
+%		\pic at (-0.9,-0.625) {star};		
+
+		% Cutting guides for corners of the cards	
+		\pic () at (0,0) {cutguide={black}};
+		\end{scope}
+	}
+}}
+
+
+\tikzset{pics/cardfrontprintable2star3/.style n args={3}{
+	code={
+		\begin{scope}
+		\clip (-\cardwidth/2 - \bleed, 0in) --%
+		      (-\cardwidth/2 - \bleed, \cardheight/2 + \bleed) --%
+		      (\cardwidth/2 + \bleed, \cardheight/2 + \bleed) --%
+		      (\cardwidth/2 + \bleed, -\cardheight/2 - \bleed) --%
+		      (-\cardwidth/2 - \bleed, -\cardheight/2 - \bleed) --%
+		      cycle;
+		% Pattern for card front
+		\pic () at (0,0) {cardfrontpattern2={#1}{#2}{#3}};
+%		\node[draw, very thick, star, star points=5, star point ratio=2.25, fill=lightgray, inner sep=0.0825in]  at (-0.4,0.9) {};
+				
+		\pic at (-0.9,0.625) {star};		
+		\pic at (-0.9,0) {star};		
+		\pic at (-0.9,-0.625) {star};		
+
+		% Cutting guides for corners of the cards	
+		\pic () at (0,0) {cutguide={black}};
+		\end{scope}
+	}
+}}
+
 
 \tikzset{pics/cardfrontunderlineprintable2/.style n args={3}{
 	code={
@@ -207,7 +441,81 @@
 		% Pattern for card front
 		\pic () at (0,0) {cardfrontpatternunderline2={#1}{#2}{#3}};
 		% Cutting guides for corners of the cards	
-		\pic () at (0,0) {cutguide={white}};
+		\pic () at (0,0) {cutguide={black}};
 		\end{scope}
 	}
 }}
+
+\tikzset{pics/cardfrontunderlineprintable2star1/.style n args={3}{
+	code={
+		\begin{scope}
+		\clip (-\cardwidth/2 - \bleed, 0in) --%
+		      (-\cardwidth/2 - \bleed, \cardheight/2 + \bleed) --%
+		      (\cardwidth/2 + \bleed, \cardheight/2 + \bleed) --%
+		      (\cardwidth/2 + \bleed, -\cardheight/2 - \bleed) --%
+		      (-\cardwidth/2 - \bleed, -\cardheight/2 - \bleed) --%
+		      cycle;
+		% Pattern for card front
+		\pic () at (0,0) {cardfrontpatternunderline2={#1}{#2}{#3}};
+%		\node[draw, very thick, star, star points=5, star point ratio=2.25, fill=lightgray, inner sep=0.0825in]  at (-0.4,0.9) {};		
+
+		\pic at (-0.9,0.75) {star};		
+		\pic at (-0.9,0.25) {star};		
+		\pic at (-0.9,-0.25) {star};		
+		\pic at (-0.9,-0.75) {star};		
+
+		\pic[rotate=180, transform shape] at (0.9,0.75) {star};		
+		\pic[rotate=180, transform shape] at (0.9,0.25) {star};		
+		\pic[rotate=180, transform shape] at (0.9,-0.25) {star};		
+		\pic[rotate=180, transform shape] at (0.9,-0.75) {star};		
+
+		\pic[rotate=-90, transform shape] at (-0.25, 1.4) {star};		
+		\pic[rotate=-90, transform shape] at (0.25, 1.4) {star};		
+
+		\pic[rotate=90, transform shape] at (-0.25, -1.4) {star};		
+		\pic[rotate=90, transform shape] at (0.25, -1.4) {star};		
+
+		% Cutting guides for corners of the cards	
+		\pic () at (0,0) {cutguide={black}};
+		\end{scope}
+	}
+}}
+
+\tikzset{pics/cardfrontprintable4/.style n args={3}{
+	code={
+		\begin{scope}
+		\clip (-\cardwidth/2 - \bleed, 0in) --%
+		      (-\cardwidth/2 - \bleed, \cardheight/2 + \bleed) --%
+		      (\cardwidth/2 + \bleed, \cardheight/2 + \bleed) --%
+		      (\cardwidth/2 + \bleed, -\cardheight/2 - \bleed) --%
+		      (-\cardwidth/2 - \bleed, -\cardheight/2 - \bleed) --%
+		      cycle;
+		% Pattern for card front
+		\pic () at (0,0) {cardfrontpattern4={#1}{#2}{#3}};
+		% Cutting guides for corners of the cards	
+		\pic () at (0,0) {cutguide={black}};
+		\end{scope}
+	}
+}}
+
+\tikzset{cardoutline/.pic={
+\node[draw, ultra thick, minimum height=2ex, minimum width=1.2ex, rounded corners=0.25ex, inner sep=0pt, fill=lightgray!50] at (0,0) {};
+}}
+
+
+\tikzset{scoretable/.pic={
+	\node[inner sep=0pt] at (0,-0.025in) {\setmainfont[Scale=0.95]{Tex Gyre Schola}\huge
+	\begin{tabular}{rrrrrcr} \midrule
+	\multicolumn{7}{c}{Set Scoring Table} \\[-0.25ex]\midrule\\[-2ex]
+	& & & & \raisebox{-0.35ex}{\tikz{\pic {cardoutline};}} & = & {\setmainfont[Scale=0.95]{Tex Gyre Schola}\huge 1} \\[0.25ex]
+	& & & \raisebox{-0.35ex}{\tikz{\pic {cardoutline};}} & \raisebox{-0.35ex}{\tikz{\pic {cardoutline};}} & = & {\setmainfont[Scale=0.95]{Tex Gyre Schola}\huge 4} \\[0.25ex]
+	& & \raisebox{-0.35ex}{\tikz{\pic {cardoutline};}} & \raisebox{-0.35ex}{\tikz{\pic {cardoutline};}} & \raisebox{-0.35ex}{\tikz{\pic {cardoutline};}} & = & {\setmainfont[Scale=0.95]{Tex Gyre Schola}\huge 9} \\[0.25ex]
+	& \raisebox{-0.35ex}{\tikz{\pic {cardoutline};}} & \raisebox{-0.35ex}{\tikz{\pic {cardoutline};}} & \raisebox{-0.35ex}{\tikz{\pic {cardoutline};}} & \raisebox{-0.35ex}{\tikz{\pic {cardoutline};}} & = & {\setmainfont[Scale=0.95]{Tex Gyre Schola}\huge 16} \\[0.25ex]
+	\raisebox{-0.35ex}{\tikz{\pic {cardoutline};}} & \raisebox{-0.35ex}{\tikz{\pic {cardoutline};}} & \raisebox{-0.35ex}{\tikz{\pic {cardoutline};}} & \raisebox{-0.35ex}{\tikz{\pic {cardoutline};}} & \raisebox{-0.35ex}{\tikz{\pic {cardoutline};}} & = & {\setmainfont[Scale=0.95]{Tex Gyre Schola}\huge 25}%\\\bottomrule
+	\end{tabular}
+	};
+	
+%	\node[text width=1.5in] at (-0.625in,0.82in) {\setmainfont[Scale=1.2]{roboto slab}\huge Scoring Table};
+	\pic[rotate=90] at (0,0) {cutguide={black}};
+}}
+

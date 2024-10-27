@@ -1,5 +1,5 @@
 \documentclass{standalone}
-\usepackage{permutations}
+\usepackage{recycle}
 
 \setlength{\cardwidth}{2.5in}
 \setlength{\cardheight}{3.5in}
@@ -11,59 +11,60 @@
 
 \begin{document}
 \begin{tikzpicture}[x=1in, y=1in]
-\pic () at (0,0) {cardfrontprintable2={1}{Red}{j}};
-\pic () at (\horizdist, 0) {cardfrontprintable2={2}{Goldenrod}{c}};
-\pic () at (2\horizdist, 0) {cardfrontprintable2={3}{ForestGreen}{l}};
-\pic () at (3\horizdist, 0) {cardfrontprintable2={4}{RoyalBlue}{r}};
-\pic () at (4\horizdist,0) {cardfrontprintable2={5}{RoyalBlue}{r}};
-\pic () at (5\horizdist,0) {cardfrontunderlineprintable2={6}{ForestGreen}{l}};
-\pic () at (6\horizdist, 0) {cardfrontprintable2={7}{Goldenrod}{c}};
-\pic () at (7\horizdist, 0) {cardfrontprintable2={8}{Red}{j}};
-\pic () at (8\horizdist, 0) {cardfrontunderlineprintable2={9}{RoyalBlue}{r}};
-\pic () at (9\horizdist,0) {cardfrontprintable2={10}{Goldenrod}{c}};
+\pic () at (0,0) {cardfrontprintable3={1}{1}{star}{Red}{doublestripewhite}};
+\pic () at (\horizdist, 0) {cardfrontprintable3={2}{2}{star}{Goldenrod}{doublestripeblack}};
+\pic () at (2\horizdist, 0) {cardfrontprintable3={3}{3}{star}{LimeGreen}{stripeblack}};
+\pic () at (3\horizdist, 0) {cardfrontprintable3={4}{4}{star}{RoyalBlue}{stripewhite}};
+\pic () at (4\horizdist,0) {cardfrontprintable3={5}{5}{star}{RoyalBlue}{stripewhite}};
+\pic () at (5\horizdist,0) {cardfrontprintable3={\phantom{.}\hspace{-0.08ex}6\hspace{-0.08ex}.}{\phantom{.}6\hspace{-0.02ex}.}{star}{LimeGreen}{stripeblack}};
+\pic () at (6\horizdist, 0) {cardfrontprintable3={7}{7}{star}{Goldenrod}{doublestripeblack}};
+\pic () at (7\horizdist, 0) {cardfrontprintable3={8}{8}{star}{Red}{doublestripewhite}};
+\pic () at (8\horizdist, 0) {cardfrontprintable3={\phantom{.}\hspace{-0.15ex}9\hspace{-0.15ex}.}{\phantom{.}\hspace{-0.06ex}9\hspace{-0.06ex}.}{star}{RoyalBlue}{stripewhite}};
+\pic () at (9\horizdist,0) {cardfrontprintable3={10}{10}{star}{Goldenrod}{doublestripeblack}};
 
-\pic () at (0, -\vertdist) {cardfrontprintable2={11}{Red}{j}};
-\pic () at (\horizdist, -\vertdist) {cardfrontprintable2={12}{ForestGreen}{l}};
-\pic () at (2\horizdist, -\vertdist) {cardfrontprintable2={13}{ForestGreen}{l}};
-\pic () at (3\horizdist, -\vertdist) {cardfrontprintable2={14}{Red}{j}};
-\pic () at (4\horizdist, -\vertdist) {cardfrontprintable2={15}{Goldenrod}{c}};
-\pic () at (5\horizdist, -\vertdist) {cardfrontprintable2={16}{RoyalBlue}{r}};
-\pic () at (6\horizdist, -\vertdist) {cardfrontprintable2={17}{ForestGreen}{l}};
-\pic () at (7\horizdist, -\vertdist) {cardfrontprintable2={18}{Goldenrod}{c}};
-\pic () at (8\horizdist, -\vertdist) {cardfrontprintable2={19}{Red}{j}};
-\pic () at (9\horizdist,  -\vertdist) {cardfrontprintable2={20}{RoyalBlue}{r}};
+\pic () at (0, -\vertdist) {cardfrontprintable3={11}{11}{star}{Red}{doublestripewhite}};
+\pic () at (\horizdist, -\vertdist) {cardfrontprintable3={12}{12}{star}{LimeGreen}{stripeblack}};
+\pic () at (2\horizdist, -\vertdist) {cardfrontprintable3={13}{13}{star}{LimeGreen}{stripeblack}};
+\pic () at (3\horizdist, -\vertdist) {cardfrontprintable3={14}{14}{star}{Red}{doublestripewhite}};
+\pic () at (4\horizdist, -\vertdist) {cardfrontprintable3={15}{15}{star}{Goldenrod}{doublestripeblack}};
+\pic () at (5\horizdist, -\vertdist) {cardfrontprintable3={16}{16}{star}{RoyalBlue}{stripewhite}};
+\pic () at (6\horizdist, -\vertdist) {cardfrontprintable3={17}{17}{moon}{LimeGreen}{stripeblack}};
+\pic () at (7\horizdist, -\vertdist) {cardfrontprintable3={18}{18}{moon}{Goldenrod}{doublestripeblack}};
+\pic () at (8\horizdist, -\vertdist) {cardfrontprintable3={19}{19}{moon}{Red}{doublestripewhite}};
+\pic () at (9\horizdist,  -\vertdist) {cardfrontprintable3={20}{20}{moon}{RoyalBlue}{stripewhite}};
 
-\pic () at (0, -2\vertdist) {cardfrontprintable2={21}{RoyalBlue}{r}};
-\pic () at (\horizdist, -2\vertdist) {cardfrontprintable2={22}{Red}{j}};
-\pic () at (2\horizdist, -2\vertdist) {cardfrontprintable2={23}{Goldenrod}{c}};
-\pic () at (3\horizdist, -2\vertdist) {cardfrontprintable2={24}{ForestGreen}{l}};
-\pic () at (4\horizdist, -2\vertdist) {cardfrontprintable2={25}{ForestGreen}{l}};
-\pic () at (5\horizdist, -2\vertdist) {cardfrontprintable2={26}{Goldenrod}{c}};
-\pic () at (6\horizdist, -2\vertdist) {cardfrontprintable2={27}{Red}{j}};
-\pic () at (7\horizdist,-2\vertdist) {cardfrontprintable2={28}{RoyalBlue}{r}};
-\pic () at (8\horizdist, -2\vertdist) {cardfrontprintable2={29}{RoyalBlue}{r}};
-\pic () at (9\horizdist, -2\vertdist) {cardfrontprintable2={30}{Red}{j}};
+\pic () at (0, -2\vertdist) {cardfrontprintable3={21}{21}{moon}{RoyalBlue}{stripewhite}};
+\pic () at (\horizdist, -2\vertdist) {cardfrontprintable3={22}{22}{moon}{Red}{doublestripewhite}};
+\pic () at (2\horizdist, -2\vertdist) {cardfrontprintable3={23}{23}{moon}{Goldenrod}{doublestripeblack}};
+\pic () at (3\horizdist, -2\vertdist) {cardfrontprintable3={24}{24}{moon}{LimeGreen}{stripeblack}};
+\pic () at (4\horizdist, -2\vertdist) {cardfrontprintable3={25}{25}{moon}{LimeGreen}{stripeblack}};
+\pic () at (5\horizdist, -2\vertdist) {cardfrontprintable3={26}{26}{moon}{Goldenrod}{doublestripeblack}};
+\pic () at (6\horizdist, -2\vertdist) {cardfrontprintable3={27}{27}{moon}{Red}{doublestripewhite}};
+\pic () at (7\horizdist,-2\vertdist) {cardfrontprintable3={28}{28}{moon}{RoyalBlue}{stripewhite}};
+\pic () at (8\horizdist, -2\vertdist) {cardfrontprintable3={29}{29}{moon}{RoyalBlue}{stripewhite}};
+\pic () at (9\horizdist, -2\vertdist) {cardfrontprintable3={30}{30}{moon}{Red}{doublestripewhite}};
 
-\pic () at (0, -3\vertdist) {cardfrontprintable2={31}{Goldenrod}{c}};
-\pic () at (1\horizdist, -3\vertdist) {cardfrontprintable2={32}{ForestGreen}{l}};
-\pic () at (2\horizdist, -3\vertdist) {cardfrontprintable2={33}{RoyalBlue}{r}};
-\pic () at (3\horizdist, -3\vertdist) {cardfrontprintable2={34}{Goldenrod}{c}};
-\pic () at (4\horizdist, -3\vertdist) {cardfrontprintable2={35}{Red}{j}};
-\pic () at (5\horizdist, -3\vertdist) {cardfrontprintable2={36}{ForestGreen}{l}};
-\pic () at (6\horizdist,-3\vertdist) {cardfrontprintable2={37}{ForestGreen}{l}};
-\pic () at (7\horizdist, -3\vertdist) {cardfrontprintable2={38}{Red}{j}};
-\pic () at (8\horizdist, -3\vertdist) {cardfrontprintable2={39}{Goldenrod}{c}};
-\pic () at (9\horizdist, -3\vertdist) {cardfrontprintable2={40}{RoyalBlue}{r}};
+\pic () at (0, -3\vertdist) {cardfrontprintable3={31}{31}{moon}{Goldenrod}{doublestripeblack}};
+\pic () at (1\horizdist, -3\vertdist) {cardfrontprintable3={32}{32}{moon}{LimeGreen}{stripeblack}};
+\pic () at (2\horizdist, -3\vertdist) {cardfrontprintable3={33}{33}{sun}{RoyalBlue}{stripewhite}};
+\pic () at (3\horizdist, -3\vertdist) {cardfrontprintable3={34}{34}{sun}{Goldenrod}{doublestripeblack}};
+\pic () at (4\horizdist, -3\vertdist) {cardfrontprintable3={35}{35}{sun}{Red}{doublestripewhite}};
+\pic () at (5\horizdist, -3\vertdist) {cardfrontprintable3={36}{36}{sun}{LimeGreen}{stripeblack}};
+\pic () at (6\horizdist,-3\vertdist) {cardfrontprintable3={37}{37}{sun}{LimeGreen}{stripeblack}};
+\pic () at (7\horizdist, -3\vertdist) {cardfrontprintable3={38}{38}{sun}{Red}{doublestripewhite}};
+\pic () at (8\horizdist, -3\vertdist) {cardfrontprintable3={39}{39}{sun}{Goldenrod}{doublestripeblack}};
+\pic () at (9\horizdist, -3\vertdist) {cardfrontprintable3={40}{40}{sun}{RoyalBlue}{stripewhite}};
 
-\pic () at (0, -4\vertdist) {cardfrontprintable2={41}{Red}{j}};
-\pic () at (1\horizdist, -4\vertdist) {cardfrontprintable2={42}{Goldenrod}{c}};
+\pic () at (0, -4\vertdist) {cardfrontprintable3={41}{41}{sun}{Red}{doublestripewhite}};
+\pic () at (1\horizdist, -4\vertdist) {cardfrontprintable3={42}{42}{sun}{Goldenrod}{doublestripeblack}};
+\pic () at (2\horizdist, -4\vertdist) {cardfrontprintable3={43}{43}{sun}{LimeGreen}{stripeblack}};
+\pic () at (3\horizdist, -4\vertdist) {cardfrontprintable3={44}{44}{sun}{RoyalBlue}{stripewhite}};
+\pic () at (4\horizdist, -4\vertdist) {cardfrontprintable3={45}{45}{sun}{RoyalBlue}{stripewhite}};
 
-\pic () at (2\horizdist, -4\vertdist) {cardfrontprintable2={43}{ForestGreen}{l}};
-\pic () at (3\horizdist, -4\vertdist) {cardfrontprintable2={44}{RoyalBlue}{r}};
-\pic () at (4\horizdist, -4\vertdist) {cardfrontprintable2={45}{RoyalBlue}{r}};
-
-\pic () at (5\horizdist, -4\vertdist) {cardfrontprintable2={46}{ForestGreen}{l}};
-\pic () at (6\horizdist, -4\vertdist) {cardfrontprintable2={47}{Goldenrod}{c}};
-\pic () at (7\horizdist, -4\vertdist) {cardfrontprintable2={48}{Red}{j}};
+\pic () at (5\horizdist, -4\vertdist) {cardfrontprintable3={46}{46}{sun}{LimeGreen}{stripeblack}};
+\pic () at (6\horizdist, -4\vertdist) {cardfrontprintable3={47}{47}{sun}{Goldenrod}{doublestripeblack}};
+\pic () at (7\horizdist, -4\vertdist) {cardfrontprintable3={48}{48}{sun}{Red}{doublestripewhite}};
+\pic () at (8\horizdist, -4\vertdist) {cardfrontprintable4={0}{white}{a}};
+\pic () at (9\horizdist, -4\vertdist) {cardfrontprintable0={49}{lightgray}{a}};
 \end{tikzpicture}
 \end{document}
