@@ -44,6 +44,28 @@
 	\pic () at (\cardwidth/2, -\cardheight/2) {guidecross={#1}};
 }}
 
+\tikzset{star/.pic={
+	\node[draw, very thick, star, star points=5, star point ratio=2.25, fill=lightgray, inner sep=0.0625in]  at (0,-0.01in) {};
+}}
+
+\tikzset{sun/.pic={
+	\node[draw, very thick, star, star points=18, star point ratio=1.25, fill=lightgray, inner sep=0.105in]  at (0,0) {};
+}}
+
+\tikzset{moon/.pic={
+%	\path (0,0) (-0.625in,0);
+	\begin{scope}
+	\clip (-0.19in,-0.19in) rectangle (0.19in, 0.19in);
+	\begin{scope}
+	\clip[draw] (0.04,0) circle (0.18in);
+	\node[draw, very thick, circle, fill=lightgray, inner sep=0.125in]  at (0.04,0) {};
+	\node[draw, very thick, circle, fill=white, inner sep=0.125in] at (0.215in, 0) {};
+	\end{scope}
+	\node[circle, fill=white, inner sep=0.12in] at (0.215in, 0) {};
+	\end{scope}
+}}
+
+
 \tikzset{cardbackpattern/.pic={
 	\foreach \i in {-1.25, -1.0,...,1.25}
 		\foreach \j in {-1.75, -1.5, ..., 1.75}
@@ -181,12 +203,7 @@
 
 \tikzset{pics/cardfrontpattern4/.style n args={3}{
 	code={
-		\setmainfont[Scale=6.0]{Roboto Slab}
-%		\node[inner sep=0pt,minimum height=0.75in, minimum width=0.75in] (ul) at (-0.9, 1.4) {{{{\setmainfont[Scale=7.0]{KalocsaiFlowers} \tiny\contour{black}{\textcolor{Red}{j}}}}}};
-%		\node[transform shape, rotate=180, inner sep=0pt,minimum height=0.75in, minimum width=0.75in] (lr) at (0.9, -1.4) {{{{\setmainfont[Scale=7.0]{KalocsaiFlowers} \tiny\contour{black}{\textcolor{ForestGreen}{l}}}}}};
-%		\node[inner sep=0pt,minimum height=0.75in, minimum width=0.75in] (ur) at (0.9, 1.4) {{{{\setmainfont[Scale=7.0]{KalocsaiFlowers} \tiny\contour{black}{\textcolor{Goldenrod}{c}}}}}};
-%		\node[transform shape, rotate=180, inner sep=0pt, minimum height=0.75in, minimum width=0.75in] (ll) at (-0.9, -1.4) {{{{\setmainfont[Scale=7.0]{KalocsaiFlowers} \tiny\contour{black}{\textcolor{RoyalBlue}{r}}}}}};
-		
+		\setmainfont[Scale=6.0]{Roboto Slab}		
 		\node[inner sep=0pt, minimum width=0.25in, minimum height=0.25in] at (0,1.4) (u) {};
 		\node[inner sep=0pt, minimum width=0.25in, minimum height=0.25in] at (0.9,1.4) (ur) {};
 		\node[inner sep=0pt, minimum width=0.25in, minimum height=0.25in] at (0.9,0) (r) {};
@@ -322,28 +339,6 @@
 		\end{scope}
 	}
 }}
-
-\tikzset{star/.pic={
-	\node[draw, very thick, star, star points=5, star point ratio=2.25, fill=lightgray, inner sep=0.0625in]  at (0,-0.01in) {};
-}}
-
-\tikzset{sun/.pic={
-	\node[draw, very thick, star, star points=18, star point ratio=1.25, fill=lightgray, inner sep=0.105in]  at (0,0) {};
-}}
-
-\tikzset{moon/.pic={
-%	\path (0,0) (-0.625in,0);
-	\begin{scope}
-	\clip (-0.19in,-0.19in) rectangle (0.19in, 0.19in);
-	\begin{scope}
-	\clip[draw] (0.04,0) circle (0.18in);
-	\node[draw, very thick, circle, fill=lightgray, inner sep=0.125in]  at (0.04,0) {};
-	\node[draw, very thick, circle, fill=white, inner sep=0.125in] at (0.215in, 0) {};
-	\end{scope}
-	\node[circle, fill=white, inner sep=0.12in] at (0.215in, 0) {};
-	\end{scope}
-}}
-
 
 \tikzset{pics/cardfrontprintable2star1/.style n args={3}{
 	code={

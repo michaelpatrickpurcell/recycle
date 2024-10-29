@@ -18,7 +18,7 @@
 \usepackage{array}
 \usepackage{afterpage}
 
-\usepackage{permutations}
+\usepackage{recycle}
 \usepackage{contour}
 \contournumber{32}
 \usepackage[letterspace=0]{microtype}
@@ -70,7 +70,7 @@
 
 \colorlet{permred}{Red}
 \colorlet{permyellow}{Goldenrod}
-\colorlet{permgreen}{ForestGreen}
+\colorlet{permgreen}{LimeGreen}
 \colorlet{permblue}{RoyalBlue}
 
 \newcommand{\cc}[2]{\contour*{black}{\textcolor{#1}{#2}}}
@@ -78,7 +78,33 @@
 \newlength{\klen}
 \setlength{\klen}{0em}%{0.125em}
 
-\version{1.0}
+\version{2.0}
+
+\tikzset{textstar/.pic={
+	\node[draw, thick, star, star points=5, star point ratio=2.25, fill=lightgray, inner sep=0.0625in]  at (0,-0.01in) {};
+	\node[minimum width=0.5in, minimum height=0.5in] at (0,0) {};
+}}
+
+\tikzset{textsun/.pic={
+	\node[draw, thick, star, star points=18, star point ratio=1.25, fill=lightgray, inner sep=0.105in]  at (0,0) {};
+	\node[minimum width=0.5in, minimum height=0.5in] at (0,0) {};
+}}
+
+\tikzset{textmoon/.pic={
+%	\path (0,0) (-0.625in,0);
+	\begin{scope}
+	\clip (-0.19in,-0.19in) rectangle (0.19in, 0.19in);
+	\begin{scope}
+	\clip[draw] (0.04,0) circle (0.18in);
+	\node[draw, very thick, circle, fill=lightgray, inner sep=0.125in]  at (0.04,0) {};
+	\node[draw, very thick, circle, fill=white, inner sep=0.125in] at (0.215in, 0) {};
+	\end{scope}
+	\node[circle, fill=white, inner sep=0.12in] at (0.215in, 0) {};
+	\end{scope}
+	\node[minimum width=0.5in, minimum height=0.5in] at (-0.025in,0) {};
+}}
+
+
 \begin{document}
 {%
 \thispagestyle{empty}
@@ -134,95 +160,184 @@ Designed by Michael Purcell
 \setmainfont{Tex Gyre Schola}%
 \raggedright%
 \section*{Overview}
-Permutations is a card game for three or four players.
-It is designed for players who are at least eight years old and can be played in
-approximately thirty minutes.
+Permutations is a card game that combines the snappy gameplay of trick-taking games with the suspense and excitement of sealed-bid auctions. The best part is, it's always your turn!
+
+Permutations is a game for two to five players and can be played in approximately thirty minutes.
 
 \vfill
 
 \section*{Components}
-Permutations is played with a deck of forty-eight cards.
+Permutations is played with a deck of fifty cards.
+\begin{itemize}[leftmargin=*]
+\item 48 coloured cards.
+
 There are twelve cards in each of four colours: red, yellow, green, and blue.
-Each card displays a unique number between one and forty-eight.
+
+A unique number between one and forty-eight is displayed on each coloured card.
+
+One icon is displayed on each coloured card.
+\begin{description}[leftmargin=*, nosep]
+\item[\raisebox{-1.125ex}{\tikz{\pic[scale=0.5, transform shape] {textstar};}}] Cards ``1'' \textendash{} ``16'' have a \emph{star} icon.
+\vspace{-.25ex}
+\item[\raisebox{-1.125ex}{\tikz{\pic[scale=0.5, transform shape] {textmoon};}}] Cards ``17'' \textendash{} ``32'' have a \emph{moon} icon.
+\item[\raisebox{-1.125ex}{\tikz{\pic[scale=0.5, transform shape] {textsun};}}] Cards ``33'' \textendash{} ``48'' have a \emph{sun} icon.
+\end{description}
+\item 1 multicoloured ``0'' card.
+\item 1 colourless ``49'' card.
+\end{itemize}
 
 \vfill
 
 \section*{Set Up}
 \begin{enumerate}[leftmargin=*]
-%	\item Sort the cards by colour.
-	\item For a three-player game, remove all the cards of any one colour from the deck.
-%	\item Draw a random card of each colour that you are using and place them face up on the table.
-%	\item Give each player all of the remaining (eleven) cards of a single colour.
-	\item Shuffle the cards.
-	\item Deal eleven cards to each player.
-	\item Place the remaining cards face up on the table.
+	\item For a two-player or three-player game, remove the ``0'' card and the ``49'' card from the deck.
+	\item Shuffle the deck of cards.
+	\item Deal out the starting hands.
+	\begin{itemize}[leftmargin=*]
+		\item For a two-player or three-player game, deal out cards to create four, eleven-card hands.
+		\item For a four-player or five-player game, deal out cards to create five, nine-card hands.
+	\end{itemize}
+	Give each player, including any dummy players (see below), a starting hand.
+	\item Place the remaining cards face up in the middle of the table.
+	\begin{itemize}[leftmargin=*]
+		\item For a two-player or three-player game, there should be four such remaining cards.
+		\item For a four-player or five-player game, there should be five such remaining cards.
+	\end{itemize}
 	\item Prepare a notepad that you can use to track players' scores throughout the game.
 \end{enumerate}
 
 \newpage
 
 \section*{Playing the Game}
-The game takes place over a series of \emph{rounds}.
+The game takes place over three \emph{rounds}.
 
-Each round is comprised of eleven \emph{auctions}.
-During each auction, you will \emph{draft} one card.
-At the end of each round, you will score points based on the cards that you drafted during that round.
+Each round consists of a series of \emph{auctions}.
+During each auction, you will \emph{collect} one card.
+At the end of each round, you will score points based on the cards that you collected during that round.
 
-You will also use the cards that you draft during each round as your hand for the next round.
+You will also use the cards that you collect during each round as your hand for the next round.
 
-The game ends when any player has scored a total of one hundred points or more.
-You win if you have the highest score at the end of the game.
+You win if you have the greatest total score at the end of the game.
 
 \vfill
 
 \subsection*{Auctions}
-During an auction, each player will draft one card from a \emph{pool} of available cards.
-For the first auction, the pool is comprised of four random cards.
-Subsequently, the pool is comprised of the players' bids from the previous auction.
-
-%\newpage
+During an auction, each player will collect one card from a \emph{pool} of available cards.
+For the first auction, the pool is comprised of random cards.
+In later auctions, the pool is comprised of the players' bids from the previous auction.
 
 To conduct an auction, secretly choose one card from your hand to be your \emph{bid}.
 The value of your bid is the number displayed on your card.
 After everyone has chosen, you should reveal your bids.
-In decreasing order of bid values, each player should draft one card from the pool.
-Place the card that you draft face up in front of you.
+
+In decreasing order of bid values, each player should collect one card from the pool.
+Place the card that you collect face up in front of you.
+
+\newpage
+
+\subsection*{Dummy Players}
+If you are playing with less than five players, you will use one or more dummy players in your game.
+Each dummy player is an automaton that mimics the actions of a human player.
+
+In a two-player game you will play with two dummy players. In a three-player or four-player game, you will play with one dummy player.
+
+At the beginning of the game, you should give each dummy player a starting hand. Dummy players will use these cards to bid during auctions, collect cards, and score points at the end of each round much like a human player would do.
+
+At the start of each auction, each dummy player will randomly select a card from their hand to use as their bid for that auction.
+\begin{itemize}[leftmargin=*]
+\item The dummy players reveal their bids before the human players choose their bids. 
+\item When a dummy player collects a card from the pool, they always collect the lowest-numbered card that is available to them.
+\end{itemize}
+Dummy players score points in the same way as human players. Try not to let them win!
 
 \newpage
 
 \subsection*{Scoring}
-Your score for each round depends on the cards that you drafted during that round.
-To determine your score, first count how many cards you drafted of each colour.
-Your score depends only on the largest of these counts, your \emph{max}.
-The following table describes your score for each possible max.
+Your score for each round depends on the cards that you collected during that round.
+You will score points based on both the icons and the colours of the cards in your collection.
 
-\medskip
+You should record how many points each player scores and how many sun icons they collect each round on the notepad that you prepared earlier.
 
+Whoever scores the most total points across all three rounds wins the game.
+
+
+\vfill
+
+\subsubsection*{Icon Scoring}
+To determine your icon scores, count how many of each icon appear on the cards in your collection.
+\begin{enumerate}[leftmargin=*]
+\item You will score two points for each star icon that you collected.
+\item The player(s) who collected the most moon icons during the round will score five points.
+\item Sun icons have no immediate impact on scoring. Record how many sun icons each player collected during each round. At the end of the game, the player(s) who collected the most total sun icons across all three rounds will lose five points.
+\end{enumerate}
+
+\newpage
+
+\subsubsection*{Colour Scoring}
+To determine your colour score, first gather all of the cards you collected of each colour into \emph{sets}.
+\begin{itemize}[leftmargin=*]
+\item The multicoloured ``0'' card can be counted as any one colour of your choice.
+\item The colourless ``49'' card does not count as any colour. Turn it face down before computing your colour score.
+\end{itemize}
+Turn your largest set face down.
+In the case of a tie, choose one of your largest sets to turn face down.
+
+Then, you will score points for each of your face-up sets according to the following table.
+
+\begin{center}
 {
-\small
-\begin{tabular}{l rrrrrrrrr} \toprule
-Max & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 \\ \midrule
-Score & 6 & 10 & 15 & 21 & 28 & 36 & 45 & 55 & 66 \\
-\bottomrule
+\begin{tabular}{r rrrrr} \toprule
+Set Size & 1 & 2 & 3 & 4 & 5\\ \midrule
+Score & \phantom{0}1 & \phantom{0}4 & \phantom{0}9 & 16 & 25\\\bottomrule
 \end{tabular}
 }
-
-\medskip
-
-These are triangular numbers. If your max for a given round is $m$, then your score is $m(m+1)/2$. 
+\end{center}
 
 \vfill
 
-\subsection*{Additional Rounds}
-Record the total points each player has scored on a notepad. If no one has scored a total one hundred points or more, you should play another round. You will use the cards that you drafted in the previous round as your hand for the next round.
-\vfill
-\hrulefill
+\subsection*{Additional Rounds and Game End}
+After each of the first two rounds, you will pick up the cards in your collection.
+These cards become your hand for the next round.
 
-\textbf{Game Design}: Michael Purcell\\
-\textbf{Contact}: \href{mailto:permfair.game@gmail.com}{permfair.game@gmail.com}\\
-\begin{tabular}{@{}m{\columnwidth-\widthof{\Huge{\doclicenseIcon}}-0.5cm}@{\hspace{0.05cm}}m{\widthof{\Huge{\doclicenseIcon}}}@{}}
-{\textbf{License}: This work is licensed\newline under a ``CC BY 4.0'' license.} & \Huge{\doclicenseIcon}\\
-\end{tabular}
+The game ends after you have played three rounds.
+At the end of the third round, whoever has scored the most total points wins the game.
+
+
+\newpage
+{%
+\thispagestyle{empty}
+		\enlargethispage{3.5\baselineskip} % Move the bottom line (author and date) down a bit
+\setmainfont[Scale=1.0]{Tex Gyre Schola}
+\begin{center}
+\makeatletter
+{Version \@version}
+\makeatother
+
+\setmainfont[Scale=1.225]{Digital Geometric-Light}
+\Huge
+\vfill
+
+\cc{permred}{P}\kern \klen\cc{permblue}{e}\kern \klen\cc{permblue}{r}\kern \klen\cc{permgreen}{m}\kern \klen\cc{permgreen}{u}\kern \klen\cc{permblue}{t}\kern \klen\cc{permgreen}{a}\kern \klen\cc{permblue}{t}\kern \klen\cc{permblue}{i}\kern \klen\cc{permgreen}{o}\kern \klen\cc{permred}{n}\kern \klen\cc{permblue}{s}
+
+\vspace{0.4cm}
+
+\cc{permyellow}{P}\kern \klen\cc{permgreen}{e}\kern \klen\cc{permyellow}{r}\kern \klen\cc{permred}{m}\kern \klen\cc{permyellow}{u}\kern \klen\cc{permred}{t}\kern \klen\cc{permyellow}{a}\kern \klen\cc{permred}{t}\kern \klen\cc{permyellow}{i}\kern \klen\cc{permred}{o}\kern \klen\cc{permyellow}{n}\kern \klen\cc{permgreen}{s}
+
+\vspace{0.4cm}
+
+\cc{permgreen}{P}\kern \klen\cc{permyellow}{e}\kern \klen\cc{permred}{r}\kern \klen\cc{permyellow}{m}\kern \klen\cc{permred}{u}\kern \klen\cc{permyellow}{t}\kern \klen\cc{permred}{a}\kern \klen\cc{permyellow}{t}\kern \klen\cc{permred}{i}\kern \klen\cc{permyellow}{o}\kern \klen\cc{permgreen}{n}\kern \klen\cc{permyellow}{s}
+
+\vspace{0.4cm}
+
+\cc{permblue}{P}\kern \klen\cc{permred}{e}\kern \klen\cc{permgreen}{r}\kern \klen\cc{permblue}{m}\kern \klen\cc{permblue}{u}\kern \klen\cc{permgreen}{t}\kern \klen\cc{permblue}{a}\kern \klen\cc{permgreen}{t}\kern \klen\cc{permgreen}{i}\kern \klen\cc{permblue}{o}\kern \klen\cc{permblue}{n}\kern \klen\cc{permred}{s}
+
+\end{center}
+}%
+
+\vfill
+\begin{center}
+\textbf{Contact}: \href{mailto:mike@armiger.games}{mike@armiger.games}
+\end{center}
 
 %\newpage
 %\thispagestyle{empty}
