@@ -45,6 +45,7 @@
 \setkomafont{section}{\setmainfont{Tex Gyre Schola}\Large\bfseries}
 \setkomafont{subsection}{\setmainfont{Tex Gyre Schola}\large\bfseries}
 \setkomafont{subsubsection}{\setmainfont{Tex Gyre Schola}\normalsize\bfseries}
+\setkomafont{paragraph}{\setmainfont{Tex Gyre Schola}\normalsize\bfseries}
 \setkomafont{descriptionlabel}{\setmainfont{Tex Gyre Schola}\normalsize\bfseries}
 
 \RedeclareSectionCommand[
@@ -104,6 +105,11 @@
 	\node[minimum width=0.5in, minimum height=0.5in] at (-0.025in,0) {};
 }}
 
+\tikzset{pics/textcard/.style n args={2}{
+code={
+	\node[draw, ultra thick, #1, minimum height=0.42in, minimum width=0.3in, rounded corners=1mm] at (0,0) {};
+	\pic[scale=0.5, transform shape] at (0,0) {#2};
+}}}
 
 \begin{document}
 {%
@@ -160,7 +166,7 @@ Designed by Michael Purcell
 \setmainfont{Tex Gyre Schola}%
 \raggedright%
 \section*{Overview}
-Permutations is a card game that combines the snappy gameplay of trick-taking games with the suspense and excitement of sealed-bid auctions. The best part is, it's always your turn!
+Permutations is a lightweight game that combines satisfying, snappy card play with the suspense and excitement of sealed-bid auctions. The best part is, it's always your turn!
 
 Permutations is a game for two to five players and can be played in approximately thirty minutes.
 
@@ -177,10 +183,10 @@ A unique number between one and forty-eight is displayed on each coloured card.
 
 One icon is displayed on each coloured card.
 \begin{description}[leftmargin=*, nosep]
-\item[\raisebox{-1.125ex}{\tikz{\pic[scale=0.5, transform shape] {textstar};}}] Cards ``1'' \textendash{} ``16'' have a \emph{star} icon.
+\item[\raisebox{-1.125ex}{\tikz{\pic[scale=0.5, transform shape] {textstar};}}] Cards ``1'' \textendash{} ``16'' have a \emph{star icon}.
 \vspace{-.25ex}
-\item[\raisebox{-1.125ex}{\tikz{\pic[scale=0.5, transform shape] {textmoon};}}] Cards ``17'' \textendash{} ``32'' have a \emph{moon} icon.
-\item[\raisebox{-1.125ex}{\tikz{\pic[scale=0.5, transform shape] {textsun};}}] Cards ``33'' \textendash{} ``48'' have a \emph{sun} icon.
+\item[\raisebox{-1.125ex}{\tikz{\pic[scale=0.5, transform shape] {textmoon};}}] Cards ``17'' \textendash{} ``32'' have a \emph{moon icon}.
+\item[\raisebox{-1.125ex}{\tikz{\pic[scale=0.5, transform shape] {textsun};}}] Cards ``33'' \textendash{} ``48'' have a \emph{sun icon}.
 \end{description}
 \item 1 multicoloured ``0'' card.
 \item 1 colourless ``49'' card.
@@ -197,7 +203,7 @@ One icon is displayed on each coloured card.
 		\item For a two-player or three-player game, deal out cards to create four, eleven-card hands.
 		\item For a four-player or five-player game, deal out cards to create five, nine-card hands.
 	\end{itemize}
-	Give each player, including any dummy players (see below), a starting hand.
+	Give each player, including any dummy players (see \textbf{Dummy Players}), a starting hand.
 	\item Place the remaining cards face up in the middle of the table.
 	\begin{itemize}[leftmargin=*]
 		\item For a two-player or three-player game, there should be four such remaining cards.
@@ -248,7 +254,7 @@ At the start of each auction, each dummy player will randomly select a card from
 \item The dummy players reveal their bids before the human players choose their bids. 
 \item When a dummy player collects a card from the pool, they always collect the lowest-numbered card that is available to them.
 \end{itemize}
-Dummy players score points in the same way as human players. Try not to let them win!
+Dummy players score points in the same way as human players. Don't let them win!
 
 \newpage
 
@@ -258,8 +264,7 @@ You will score points based on both the icons and the colours of the cards in yo
 
 You should record how many points each player scores and how many sun icons they collect each round on the notepad that you prepared earlier.
 
-Whoever scores the most total points across all three rounds wins the game.
-
+%Whoever scores the most total points across all three rounds wins the game.
 
 \vfill
 
@@ -267,9 +272,11 @@ Whoever scores the most total points across all three rounds wins the game.
 To determine your icon scores, count how many of each icon appear on the cards in your collection.
 \begin{enumerate}[leftmargin=*]
 \item You will score two points for each star icon that you collected.
-\item The player(s) who collected the most moon icons during the round will score five points.
-\item Sun icons have no immediate impact on scoring. Record how many sun icons each player collected during each round. At the end of the game, the player(s) who collected the most total sun icons across all three rounds will lose five points.
+%\item The player(s) who collected the most moon icons during the round will score five points.
+\item Whoever collected the most moon icons during the round will score their face-down sets during the colour-scoring phase (see \textbf{Colour Scoring}) instead of their face-up sets.% In the case of a tie, whoever collected the lowest-numbered moon card will receive this bonus.
+\item Record how many sun icons you collect during each round. At the end of the game, if you collected the most total sun icons across all three rounds, your final score is set to zero.% In the case of a tie, whoever collected the lowest-numbered sun card during the final round of the game will receive this penalty.
 \end{enumerate}
+In the case of a tie, whichever tied player collected the lowest-numbered card with a given icon will receive the corresponding bonus/penalty.
 
 \newpage
 
@@ -286,12 +293,28 @@ Then, you will score points for each of your face-up sets according to the follo
 
 \begin{center}
 {
-\begin{tabular}{r rrrrr} \toprule
-Set Size & 1 & 2 & 3 & 4 & 5\\ \midrule
-Score & \phantom{0}1 & \phantom{0}4 & \phantom{0}9 & 16 & 25\\\bottomrule
+\begin{tabular}{r rrrrrcl} \toprule
+Set Size & 1 & 2 & 3 & 4 & 5 & $\cdots$ & $n$\\ \midrule
+Score & \phantom{0}1 & \phantom{0}4 & \phantom{0}9 & 16 & 25 & $\cdots$ & $n^2$ \\\bottomrule
 \end{tabular}
 }
 \end{center}
+
+\textbf{Moon Icon Bonus}: If you collected the most moon icons during a round, then you will not score points for any of your face-up sets. 
+Instead you will score points for each of your face-down sets according to the table above.
+
+\newpage
+
+\subsubsection*{Scoring Example}
+Consider the collection depicted below. 
+
+\begin{center}
+\tikz{\pic {textcard={Red}{textstar}};} \tikz{\pic {textcard={Red}{textmoon}};} \tikz{\pic {textcard={Red}{textmoon}};} \tikz{\pic {textcard={Red}{textsun}};} \hfill \tikz{\pic {textcard={LimeGreen}{textstar}};} \tikz{\pic {textcard={LimeGreen}{textstar}};} \tikz{\pic {textcard={LimeGreen}{textmoon}};} \hfill \tikz{\pic {textcard={RoyalBlue}{textmoon}};} \tikz{\pic {textcard={RoyalBlue}{textsun}};}
+\end{center}
+
+If this player collected the most moon icons, this collection will score 22 points: 6 points for the star icons and 16 points for the four-card red set. 
+
+Otherwise, it will score 19 points: 6 points for the star icons, 9 points for the three-card green set, and 4 points for the two-card blue set.
 
 \vfill
 
@@ -302,48 +325,22 @@ These cards become your hand for the next round.
 The game ends after you have played three rounds.
 At the end of the third round, whoever has scored the most total points wins the game.
 
+%\section*{Cooperative Variant}
+%When playing cooperatively, your goal is to ensure that a dummy player wins the game.
+%
+%Play the game as you would if playing competitively. The only change is that whoever collected the most total sun icons at the end of the game loses ten points rather than having their score set to zero.
+%
+%If a dummy player has the most points at the end of the game, you win. If not, you lose. Your team score is equal to the lowest player's score.
+%
+%To make the game more challenging, you can reduce the reward for collecting star icons to be just one point per icon.
+
+
+\vfill
+
+\hrulefill
+
+{\footnotesize \textbf{Design}: Michael Purcell \hfill \textbf{Contact}:~\href{mailto:mike@armiger.games}{mike@armiger.games}}
 
 \newpage
-{%
-\thispagestyle{empty}
-		\enlargethispage{3.5\baselineskip} % Move the bottom line (author and date) down a bit
-\setmainfont[Scale=1.0]{Tex Gyre Schola}
-\begin{center}
-\makeatletter
-{Version \@version}
-\makeatother
 
-\setmainfont[Scale=1.225]{Digital Geometric-Light}
-\Huge
-\vfill
-
-\cc{permred}{P}\kern \klen\cc{permblue}{e}\kern \klen\cc{permblue}{r}\kern \klen\cc{permgreen}{m}\kern \klen\cc{permgreen}{u}\kern \klen\cc{permblue}{t}\kern \klen\cc{permgreen}{a}\kern \klen\cc{permblue}{t}\kern \klen\cc{permblue}{i}\kern \klen\cc{permgreen}{o}\kern \klen\cc{permred}{n}\kern \klen\cc{permblue}{s}
-
-\vspace{0.4cm}
-
-\cc{permyellow}{P}\kern \klen\cc{permgreen}{e}\kern \klen\cc{permyellow}{r}\kern \klen\cc{permred}{m}\kern \klen\cc{permyellow}{u}\kern \klen\cc{permred}{t}\kern \klen\cc{permyellow}{a}\kern \klen\cc{permred}{t}\kern \klen\cc{permyellow}{i}\kern \klen\cc{permred}{o}\kern \klen\cc{permyellow}{n}\kern \klen\cc{permgreen}{s}
-
-\vspace{0.4cm}
-
-\cc{permgreen}{P}\kern \klen\cc{permyellow}{e}\kern \klen\cc{permred}{r}\kern \klen\cc{permyellow}{m}\kern \klen\cc{permred}{u}\kern \klen\cc{permyellow}{t}\kern \klen\cc{permred}{a}\kern \klen\cc{permyellow}{t}\kern \klen\cc{permred}{i}\kern \klen\cc{permyellow}{o}\kern \klen\cc{permgreen}{n}\kern \klen\cc{permyellow}{s}
-
-\vspace{0.4cm}
-
-\cc{permblue}{P}\kern \klen\cc{permred}{e}\kern \klen\cc{permgreen}{r}\kern \klen\cc{permblue}{m}\kern \klen\cc{permblue}{u}\kern \klen\cc{permgreen}{t}\kern \klen\cc{permblue}{a}\kern \klen\cc{permgreen}{t}\kern \klen\cc{permgreen}{i}\kern \klen\cc{permblue}{o}\kern \klen\cc{permblue}{n}\kern \klen\cc{permred}{s}
-
-\end{center}
-}%
-
-\vfill
-\begin{center}
-\textbf{Contact}: \href{mailto:mike@armiger.games}{mike@armiger.games}
-\end{center}
-
-%\newpage
-%\thispagestyle{empty}
-%\phantom{a}
-%
-%\newpage
-%\thispagestyle{empty}
-%\phantom{a}
 \end{document}
